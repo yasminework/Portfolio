@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Yasmin Shaker — Business Intelligence Developer</title>
+<meta name="description" content="Yasmin Shaker, Microsoft-certified Business Intelligence Developer. Power BI, DAX, SQL, ETL pipelines. Dubai.">
+
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M22VZKHXN0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-M22VZKHXN0');
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --accent:#818cf8;
+    --accent2:#a5b4fc;
+    --accent-dark:#6366f1;
+    --bg:#0d0d0d;
+    --bg-alt:#141414;
+    --card:#18181b;
+    --text:#e7e7ea;
+    --text-dim:#9a9aa2;
+    --border:#27272a;
+    --maxw:1120px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4{font-family:'Plus Jakarta Sans',sans-serif;}
+  a{color:var(--accent);text-decoration:none;}
+  a:hover{color:var(--accent-dark);}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px;}
+  section{padding:100px 0;position:relative;}
+  .eyebrow{
+    color:var(--accent);
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:10px;
+    display:block;
+  }
+  h2.section-title{
+    font-size:32px;
+    font-weight:700;
+    margin-bottom:40px;
+    color:#fff;
+  }
+
+  /* reveal-on-scroll */
+  .reveal{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.7,.3,1), transform .8s cubic-bezier(.2,.7,.3,1);}
+  .reveal.in{opacity:1;transform:translateY(0);}
+  .reveal-delay-1{transition-delay:.12s;}
+  .reveal-delay-2{transition-delay:.24s;}
+  .reveal-delay-3{transition-delay:.36s;}
+  .reveal-delay-4{transition-delay:.48s;}
+
+  /* hero entrance — CSS-driven so it always plays on load, no JS/scroll dependency */
+  @keyframes heroIn{
+    from{opacity:0;transform:translateY(26px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+  .hero-anim{opacity:0;animation:heroIn .9s cubic-bezier(.2,.7,.3,1) forwards;}
+  .hero-anim.d1{animation-delay:.15s;}
+  .hero-anim.d2{animation-delay:.32s;}
+  .hero-anim.d3{animation-delay:.5s;}
+  .hero-anim.d4{animation-delay:.68s;}
+
+  /* gentle bobbing scroll cue */
+  .scrolldown{
+    position:absolute;left:50%;bottom:28px;transform:translateX(-50%);
+    color:var(--text-dim);font-size:12px;letter-spacing:2px;text-transform:uppercase;
+    display:flex;flex-direction:column;align-items:center;gap:8px;opacity:.8;
+  }
+  .scrolldown .arrow{
+    width:10px;height:10px;border-right:2px solid var(--accent);border-bottom:2px solid var(--accent);
+    transform:rotate(45deg);animation:bob 1.8s ease-in-out infinite;
+  }
+  @keyframes bob{
+    0%,100%{transform:rotate(45deg) translate(0,0);}
+    50%{transform:rotate(45deg) translate(4px,4px);}
+  }
+
+  /* NAV */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(13,13,13,0.9);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+    transition:border-color .3s;
+  }
+  #scrollbar{
+    position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));
+    width:0%;z-index:200;transition:width .1s linear;
+  }
+  nav.wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    height:70px;
+  }
+  .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:20px;color:#fff;}
+  .logo span{color:var(--accent);}
+  .navlinks{display:flex;gap:30px;list-style:none;}
+  .navlinks a{
+    color:var(--text-dim);font-size:13.5px;font-weight:500;letter-spacing:.5px;text-transform:uppercase;
+    position:relative;padding-bottom:4px;
+  }
+  .navlinks a:after{
+    content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--accent);
+    transition:width .25s ease;
+  }
+  .navlinks a:hover{color:var(--accent);}
+  .navlinks a:hover:after{width:100%;}
+  .navtoggle{display:none;color:#fff;font-size:26px;background:none;border:none;cursor:pointer;}
+  @media (max-width:820px){
+    .navlinks{
+      position:fixed;top:70px;right:0;
+      background:var(--bg-alt);
+      flex-direction:column;
+      width:230px;
+      padding:20px;
+      border:1px solid var(--border);
+      display:none;
+      gap:18px;
+    }
+    .navlinks.open{display:flex;}
+    .navtoggle{display:block;}
+  }
+
+  /* HERO */
+  #home{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding-top:70px;
+    background:linear-gradient(180deg,var(--bg) 0%,var(--bg-alt) 100%);
+    overflow:hidden;
+  }
+  .glow{
+    position:absolute;border-radius:50%;filter:blur(90px);opacity:.28;pointer-events:none;
+    animation:float 12s ease-in-out infinite;
+  }
+  .glow.g1{width:420px;height:420px;background:var(--accent);top:-120px;right:-100px;}
+  .glow.g2{width:340px;height:340px;background:var(--accent2);bottom:-140px;left:-80px;animation-delay:-6s;}
+  @keyframes float{
+    0%,100%{transform:translate(0,0) scale(1);}
+    50%{transform:translate(-20px,30px) scale(1.08);}
+  }
+  .hero-tag{
+    display:inline-block;color:var(--accent);font-weight:600;letter-spacing:.5px;font-size:13px;
+    background:rgba(129,140,248,.12);border:1px solid rgba(129,140,248,.3);padding:6px 16px;border-radius:20px;
+  }
+  .hero h1{
+    font-size:clamp(32px,5vw,54px);
+    font-weight:800;
+    margin:18px 0 10px;
+    max-width:820px;
+    color:var(--accent);
+  }
+  .hero .role{
+    font-size:20px;font-weight:600;color:#fff;margin-bottom:18px;display:block;
+  }
+  .hero p{
+    max-width:720px;
+    color:var(--text-dim);
+    font-size:17px;
+    margin-bottom:34px;
+  }
+  .btnrow{display:flex;gap:16px;flex-wrap:wrap;}
+  .btn{
+    display:inline-block;
+    padding:13px 30px;
+    border-radius:8px;
+    font-weight:600;
+    font-size:14px;
+    letter-spacing:.3px;
+    transition:.25s;
+    border:1px solid var(--accent);
+    position:relative;
+    overflow:hidden;
+  }
+  .btn-solid{background:var(--accent);color:#101014;}
+  .btn-solid:hover{background:var(--accent-dark);color:#fff;transform:translateY(-2px);box-shadow:0 8px 22px rgba(129,140,248,.3);}
+  .btn-outline{color:var(--accent);}
+  .btn-outline:hover{background:var(--accent);color:#101014;transform:translateY(-2px);}
+
+  .stats{
+    display:flex;gap:56px;margin-top:56px;flex-wrap:wrap;
+  }
+  .stat b{display:block;font-size:32px;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;}
+  .stat span{color:var(--text-dim);font-size:13px;text-transform:uppercase;letter-spacing:1px;}
+
+  /* ABOUT */
+  #about{background:var(--bg-alt);}
+  .about-flex{display:flex;gap:48px;align-items:center;flex-wrap:wrap;}
+  .about-photo{
+    width:220px;height:220px;border-radius:50%;object-fit:cover;flex-shrink:0;
+    border:1px solid var(--border);padding:6px;
+  }
+  .about-text{flex:1;min-width:280px;}
+  .about-text p{color:var(--text-dim);margin-bottom:16px;}
+  .about-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;}
+  .about-pills span{
+    background:var(--card);border:1px solid var(--border);color:var(--text-dim);
+    padding:7px 14px;border-radius:20px;font-size:13px;
+  }
+  .tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;}
+  .tag{
+    background:var(--card);
+    border:1px solid var(--border);
+    color:var(--text);
+    padding:8px 16px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:500;
+    transition:.2s;
+  }
+  .tag:hover{border-color:var(--accent);transform:translateY(-2px);}
+  .tag.core{border-color:var(--accent);color:var(--accent);}
+
+  .clients{margin-top:40px;}
+  .clients h4{color:#fff;margin-bottom:14px;font-size:15px;text-transform:uppercase;letter-spacing:1px;}
+  .client-list{display:flex;flex-wrap:wrap;gap:10px;}
+  .client-list span{
+    background:var(--bg);
+    border:1px solid var(--border);
+    padding:7px 14px;
+    border-radius:4px;
+    font-size:13px;
+    color:var(--text-dim);
+  }
+
+  /* QUALIFICATION / EXPERIENCE + EDUCATION */
+  .qual-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;}
+  @media (max-width:820px){.qual-grid{grid-template-columns:1fr;}}
+  .qual-head{display:flex;align-items:center;gap:12px;margin-bottom:26px;}
+  .qual-icon{
+    width:38px;height:38px;border-radius:10px;background:rgba(129,140,248,.12);
+    display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:18px;
+  }
+  .qual-head h3{color:#fff;font-size:20px;font-weight:700;}
+
+  .timeline{position:relative;padding-left:26px;}
+  .timeline:before{
+    content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;
+    background:linear-gradient(180deg,var(--accent),var(--border));
+  }
+  .tl-item{position:relative;margin-bottom:20px;}
+  .tl-dot{
+    position:absolute;left:-26px;top:22px;width:12px;height:12px;border-radius:50%;
+    background:var(--bg-alt);border:2px solid var(--accent);
+  }
+  .tl-card{
+    background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px 22px;
+    transition:.2s;
+  }
+  .tl-card:hover{border-color:var(--accent);}
+  .tl-role{color:#fff;font-size:16.5px;font-weight:700;}
+  .tl-org{color:var(--accent);font-size:13.5px;font-weight:600;margin:2px 0 10px;display:block;}
+  .tl-dates{
+    color:var(--text-dim);font-size:12px;margin-bottom:12px;display:inline-block;
+    background:var(--bg);border:1px solid var(--border);padding:4px 10px;border-radius:20px;
+  }
+  .tl-card p{color:var(--text-dim);font-size:14px;margin-top:6px;}
+  .tl-card details summary{margin-top:10px;}
+  .tl-client{margin-top:14px;padding-left:16px;border-left:2px solid var(--border);}
+  .tl-client h4{color:#fff;font-size:14px;font-weight:600;margin-bottom:4px;}
+  .tl-client .tl-dates{margin-bottom:0;}
+
+  details{margin-top:10px;}
+  summary{
+    cursor:pointer;color:var(--accent);font-size:13px;font-weight:600;
+    list-style:none;
+  }
+  summary::-webkit-details-marker{display:none;}
+  summary:before{content:"+ ";}
+  details[open] summary:before{content:"– ";}
+  details p, details ul{color:var(--text-dim);font-size:14px;margin-top:10px;}
+  details ul{padding-left:18px;}
+  details li{margin-bottom:6px;}
+
+  /* SKILLS */
+  #skills{background:var(--bg-alt);}
+  .skills-grid{display:flex;flex-wrap:wrap;gap:12px;}
+  .skill-pill{
+    background:var(--card);border:1px solid var(--border);color:var(--text);
+    padding:10px 18px;border-radius:10px;font-size:14px;font-weight:500;transition:.2s;
+  }
+  .skill-pill:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px);}
+
+  /* PROJECTS */
+  .project-grid{display:grid;grid-template-columns:1fr;gap:34px;}
+  .project-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:30px;
+    transition:.3s;
+  }
+  .project-card:hover{
+    border-color:var(--accent);
+    box-shadow:0 14px 34px rgba(0,0,0,.35);
+  }
+  .project-head{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px;margin-bottom:6px;}
+  .project-card h3{color:#fff;font-size:20px;display:flex;align-items:center;gap:10px;}
+  .card-icon{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:34px;height:34px;border-radius:8px;flex-shrink:0;
+    background:rgba(129,140,248,.12);border:1px solid var(--border);
+  }
+  .card-icon svg{width:18px;height:18px;}
+  .project-preview{
+    width:100%;aspect-ratio:16/10;border-radius:8px;overflow:hidden;
+    border:1px solid var(--border);margin-bottom:16px;background:#0f0f10;
+    transition:.3s;
+  }
+  .project-card:hover .project-preview{border-color:var(--accent);}
+  .project-preview svg{width:100%;height:100%;display:block;}
+  .project-preview img{width:100%;height:100%;object-fit:cover;display:block;}
+  .project-preview iframe{width:100%;height:100%;border:0;display:block;}
+  .project-card p{color:var(--text-dim);font-size:14.5px;margin-bottom:8px;}
+  .project-card .badges{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px;}
+  .project-card .badges span{
+    font-size:11px;
+    background:var(--bg);
+    color:var(--accent);
+    padding:4px 10px;
+    border-radius:12px;
+    border:1px solid var(--border);
+  }
+
+  /* CERTIFICATIONS */
+  #certs{background:var(--bg-alt);}
+  .cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;}
+  .cert-card{
+    background:var(--card);border:1px solid var(--border);border-radius:10px;
+    padding:22px;transition:.25s;
+  }
+  .cert-card:hover{border-color:var(--accent);transform:translateY(-4px);}
+  .cert-card .cert-icon{color:var(--accent);font-size:22px;margin-bottom:10px;}
+  .cert-card h4{color:#fff;font-size:15px;margin-bottom:4px;}
+  .cert-card span{color:var(--text-dim);font-size:13px;}
+
+  /* GALLERY */
+  #gallery .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:20px;
+  }
+  .gallery-grid img{
+    width:100%;
+    border-radius:8px;
+    border:1px solid var(--border);
+    filter:brightness(.9);
+    transition:.3s;
+  }
+  .gallery-grid img:hover{filter:brightness(1.05);border-color:var(--accent);transform:scale(1.02);}
+  .gallery-mock{
+    border-radius:8px;overflow:hidden;border:1px solid var(--border);
+    transition:.3s;background:#fff;aspect-ratio:300/190;
+  }
+  .gallery-mock:hover{border-color:var(--accent);transform:translateY(-3px);}
+  .gallery-mock img{width:100%;height:100%;object-fit:cover;display:block;}
+  .gallery-note{color:var(--text-dim);font-size:13px;margin-top:16px;font-style:italic;}
+
+  /* CONTACT */
+  .contact-box{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:44px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:30px;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .contact-box h3{color:#fff;font-size:22px;margin-bottom:8px;}
+  .contact-box p{color:var(--text-dim);}
+  footer{
+    text-align:center;
+    padding:30px 0;
+    color:var(--text-dim);
+    font-size:13px;
+    border-top:1px solid var(--border);
+  }
+  footer span{color:var(--accent);}
+</style>
+</head>
+<body>
+
+<div id="scrollbar"></div>
+<header>
+  <nav class="wrap">
+    <div class="logo">Yasmin <span>Shaker</span></div>
+    <ul class="navlinks" id="navlinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Qualification</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#certs">Certifications</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="navtoggle" id="navtoggle">☰</button>
+  </nav>
+</header>
+
+<section id="home">
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+  <div class="wrap">
+    <span class="hero-tag hero-anim">Available for work</span>
+    <h1 class="hero-anim d1">Yasmin Shaker Abdel Hameed</h1>
+    <span class="role hero-anim d1">Business Intelligence Developer</span>
+    <p class="hero-anim d2">Microsoft-certified Business Intelligence Developer with 9+ years of experience across the Middle East and Europe. Based in Dubai, I specialize in Power BI, DAX, SQL, and ETL pipelines — building data solutions that give organizations a true single source of truth.</p>
+    <div class="btnrow hero-anim d3">
+      <a href="#contact" class="btn btn-solid">Contact me</a>
+      <a href="https://drive.google.com/file/d/1RdheoTMoKQiRSxcsaU9zr6n_QWRsX2QF/view?usp=drive_link" target="_blank" class="btn btn-outline">View my CV</a>
+    </div>
+    <div class="stats hero-anim d4">
+      <div class="stat"><b class="counter" data-target="9">0</b><span>Years Experience</span></div>
+      <div class="stat"><b class="counter" data-target="8">0</b><span>Clients</span></div>
+      <div class="stat"><b class="counter" data-target="11">0</b><span>BI Projects</span></div>
+      <div class="stat"><b class="counter" data-target="5">0</b><span>Certifications</span></div>
+    </div>
+  </div>
+  <div class="scrolldown"><span>Scroll</span><div class="arrow"></div></div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <span class="eyebrow reveal">Who I am</span>
+    <h2 class="section-title reveal">About</h2>
+    <div class="about-flex reveal reveal-delay-1">
+      <img class="about-photo" src="https://res.cloudinary.com/dbakezv9c/image/upload/v1784615700/portfolio/photos/hjoszvmbjmhgdziybymq.jpg" alt="Yasmin Shaker Abdel Hameed">
+      <div class="about-text">
+        <p>With over 9 years of experience in Business Intelligence, I have developed a strong background in data modeling, ETL pipelines, and reporting. I have worked with various BI tools, including Power BI, OBIEE, SAP BO, and Excel, and have a proven track record of delivering actionable insights for finance, HR, and sales dashboards. I am Microsoft-certified and have experience working with diverse enterprise environments across the Middle East and Europe.</p>
+        <p>My work spans Finance, HR, Sales, Procurement, and Agriculture — with clients ranging from Dubai Integrated Economic Zones and the National Bank of Egypt to international names like Danone. I don't just build dashboards — I replace spreadsheet chaos and manual reconciliation with scalable, automated reporting that leadership actually trusts, managing every project end-to-end from requirements gathering to delivery.</p>
+        <div class="about-pills">
+          <span>Business Intelligence Developer</span>
+          <span>Mirdif, Dubai, UAE</span>
+          <span>yasmine.shaker88@gmail.com</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="clients reveal reveal-delay-2">
+      <h4>Industries &amp; Clients</h4>
+      <div class="client-list">
+        <span>Finance</span><span>HR</span><span>Sales</span><span>Procurement</span><span>Agriculture</span>
+        <span>Rora Orchards (South Africa)</span><span>Dubai Integrated Economic Zones</span>
+        <span>Danone (France)</span><span>Road and Transport Authority (RTA)</span>
+        <span>National Bank of Egypt</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <span class="eyebrow reveal">My journey</span>
+    <h2 class="section-title reveal">Qualification</h2>
+    <div class="qual-grid">
+
+      <div class="reveal reveal-delay-1">
+        <div class="qual-head"><span class="qual-icon">💼</span><h3>Experience</h3></div>
+        <div class="timeline">
+
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+              <div class="tl-role">BI Developer (Power BI) — Upwork, Remote</div>
+              <span class="tl-dates">May 2025 – Current</span>
+              <div class="tl-client">
+                <h4>Client: Rora Orchards, South Africa</h4>
+                <span class="tl-dates">May 2025 – Current</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+              <div class="tl-role">Business Intelligence Developer — Solution BI Middle East, Dubai, UAE</div>
+              <span class="tl-dates">Sep 2022 – May 2025</span>
+              <div class="tl-client">
+                <h4>Client: Dubai Integrated Economic Zones (DIEZ)</h4>
+                <span class="tl-dates">Feb 2024 – May 2025</span>
+              </div>
+              <div class="tl-client">
+                <h4>Client: Danone, France</h4>
+                <span class="tl-dates">Aug 2023 – Feb 2024</span>
+              </div>
+              <div class="tl-client">
+                <h4>Client: Road and Transport Authority (RTA)</h4>
+                <span class="tl-dates">Sep 2022 – Jul 2023</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+              <div class="tl-role">Business Intelligence Developer — Freelance, Remote</div>
+              <span class="tl-dates">Jan 2020 – Aug 2022</span>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+              <div class="tl-role">BI Developer (OBIEE) — National Bank of Egypt, Cairo, Egypt</div>
+              <span class="tl-dates">Dec 2013 – Jun 2015</span>
+            </div>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+              <div class="tl-role">BI Developer (SAP BO) — Smart Consulting Solutions, Cairo, Egypt</div>
+              <span class="tl-dates">Oct 2011 – Dec 2013</span>
+              <div class="tl-client">
+                <h4>Client: Bavarian Auto Group (BAG)</h4>
+                <span class="tl-dates">Jul 2012 – Jan 2013</span>
+              </div>
+              <div class="tl-client">
+                <h4>Client: Al-Mokhtabar Medical Laboratories</h4>
+                <span class="tl-dates">Dec 2011 – May 2012</span>
+              </div>
+              <div class="tl-client">
+                <h4>Client: Building Material Industry Company (BMIC)</h4>
+                <span class="tl-dates">Feb 2013 – Aug 2013</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-2">
+        <div class="qual-head"><span class="qual-icon">🎓</span><h3>Education</h3></div>
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+              <div class="tl-role">Cairo University</div>
+              <span class="tl-org">B.Sc. Computer Engineering · Computer Engineering</span>
+              <span class="tl-dates">Sep 2005 – Sep 2010</span>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-card">
+              <div class="tl-role">ITI</div>
+              <span class="tl-org">Diploma in Software Engineering – Data Warehousing &amp; BI · BI and DWH</span>
+              <span class="tl-dates">May 2010 – May 2011</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <span class="eyebrow reveal">What I work with</span>
+    <h2 class="section-title reveal">Skills</h2>
+    <div class="skills-grid reveal reveal-delay-1">
+      <span class="skill-pill">Microsoft Power BI</span>
+      <span class="skill-pill">OBIEE</span>
+      <span class="skill-pill">Microsoft Excel</span>
+      <span class="skill-pill">Oracle Analytics Cloud</span>
+      <span class="skill-pill">MicroStrategy</span>
+      <span class="skill-pill">Tableau</span>
+      <span class="skill-pill">SAP Business Objects</span>
+      <span class="skill-pill">Oracle</span>
+      <span class="skill-pill">Microsoft SQL Server</span>
+      <span class="skill-pill">Azure SQL</span>
+      <span class="skill-pill">Databricks</span>
+      <span class="skill-pill">Snowflake</span>
+      <span class="skill-pill">Informatica Big Data Management</span>
+      <span class="skill-pill">Informatica Cloud Data Integration</span>
+      <span class="skill-pill">Microsoft Azure Machine Learning</span>
+      <span class="skill-pill">Python</span>
+      <span class="skill-pill">DAX</span>
+      <span class="skill-pill">Power Query</span>
+      <span class="skill-pill">Power Automate</span>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <span class="eyebrow reveal">Selected Work</span>
+    <h2 class="section-title reveal">Interactive Dashboards</h2>
+    <div class="project-grid">
+
+      <div class="project-card reveal">
+        <div class="project-head"><h3><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12" y="8" width="3" height="10"/><rect x="17" y="5" width="3" height="13"/></svg></span>QuickBooks Finance Dashboard</h3></div>
+        <div class="project-preview"><iframe src="https://app.powerbi.com/view?r=eyJrIjoiYmM0MTk1NmUtNDQ1Ni00MjcwLTkwZTEtMzA0OTdkMDRhZjc2IiwidCI6ImIxZWMzN2M3LWQwMWEtNDkwYS04YjJlLTgwY2EyZmU5YTMxYiJ9" loading="lazy" allowfullscreen title="QuickBooks Finance Dashboard live"></iframe></div>
+        <p>End-to-end BI solution for financial reporting, from raw QuickBooks extraction to AI-generated executive commentary.</p>
+        <div class="badges"><span>Python</span><span>Azure SQL</span><span>Power BI</span><span>OpenAI</span></div>
+        <details>
+          <summary>Details</summary>
+          <ul>
+            <li><b>Data Integration:</b> Extracted raw financial data from QuickBooks using Python and loaded it into Azure SQL.</li>
+            <li><b>Data Modeling:</b> Built a star schema in Azure SQL to optimize query performance.</li>
+            <li><b>Reporting:</b> Power BI dashboards with dynamic time intelligence (Selected Month, QTD, YTD) and benchmarks vs Last Year, Last Month, and Budget.</li>
+            <li><b>AI-Powered Insights:</b> Integrated OpenAI via Python to auto-generate narrative commentary alongside the visuals.</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="project-card reveal">
+        <h3><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 6h6v6"/></svg></span>Sales Analysis Dashboard</h3>
+        <div class="project-preview"><iframe src="https://app.powerbi.com/view?r=eyJrIjoiMWVjMDRhMjAtZmZkNC00ODY5LWE0M2UtZDAwNzMxZjMwNGFkIiwidCI6ImIxZWMzN2M3LWQwMWEtNDkwYS04YjJlLTgwY2EyZmU5YTMxYiJ9" loading="lazy" allowfullscreen title="Sales Analysis Dashboard live"></iframe></div>
+        <p>Interactive Power BI reporting for sales performance tracking and trend analysis.</p>
+        <div class="badges"><span>Power BI</span><span>SQL</span></div>
+      </div>
+
+      <div class="project-card reveal">
+        <h3><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span>Rora Orchards — Sales Analysis Dashboard</h3>
+        <div class="project-preview"><iframe src="https://app.powerbi.com/view?r=eyJrIjoiYzUzZTc1MjEtNWY1ZC00ODQyLWIzODUtNjZkNmIxNzE1M2RjIiwidCI6ImIxZWMzN2M3LWQwMWEtNDkwYS04YjJlLTgwY2EyZmU5YTMxYiJ9" loading="lazy" allowfullscreen title="Rora Orchards Sales Analysis Dashboard live"></iframe></div>
+        <p>End-to-end sales and payment visibility across consignment and bin-based fruit and blueberry sales channels.</p>
+        <div class="badges"><span>SQL Server</span><span>Power Automate</span><span>SharePoint</span><span>Power BI</span></div>
+        <details>
+          <summary>Details</summary>
+          <p><b>Data architecture:</b> Sales data sourced from an on-premises SQL Server database via an On-Premises Data Gateway. Payment files arrive by email, triggering a Power Automate flow that extracts attachments and saves them to SharePoint. Power BI consolidates both sources into one reporting layer.</p>
+          <ul>
+            <li><b>Consignment Dashboard</b> — STD Cartons Sold, Total Payment, KG Sold, R/Carton, R/KG, paid vs not-paid breakdowns, seasonal trends.</li>
+            <li><b>Bins Dashboard</b> — #Bins Sold, Total Payment, Tons Sold, R/Bin, R/Ton, segmented by agent, farm, commodity, variety, packing method.</li>
+            <li><b>Sales Detail Table</b> — drill-through view with dynamic dimension and measure selectors.</li>
+            <li><b>Future Payments Analysis</b> — outstanding payments by commodity, agent, week/month/year.</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="project-card reveal">
+        <h3><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></span>Rora Orchards — Berries Picking Dashboard</h3>
+        <div class="project-preview"><iframe src="https://app.powerbi.com/view?r=eyJrIjoiZGY0ZmYyNWYtNjg0Zi00NTBiLTgwZjItYjg4NzhiODIwNGJiIiwidCI6ImIxZWMzN2M3LWQwMWEtNDkwYS04YjJlLTgwY2EyZmU5YTMxYiJ9" loading="lazy" allowfullscreen title="Rora Orchards Berries Picking Dashboard live"></iframe></div>
+        <p>Operational visibility into the blueberry picking season — productivity, quality, wages, and weather correlation.</p>
+        <div class="badges"><span>SQL Server</span><span>SharePoint</span><span>Weather API</span><span>Power BI</span></div>
+        <details>
+          <summary>Details</summary>
+          <p><b>Data architecture:</b> Picking data from on-premises SQL Server via gateway; budget data from Excel/SharePoint; live weather data via external API for quality correlation analysis.</p>
+          <ul>
+            <li><b>Picking Analysis</b> — Hectares Planted, Picking KG &amp; Wages (Actual vs Budget), Picking R/KG, variance indicators by grade and variety.</li>
+            <li><b>Picking vs Consignment Analysis</b> — bridges operational and commercial data with weekly/monthly trends.</li>
+            <li><b>Picking Wages Analysis</b> — auto-generated narrative highlights: peak wage weeks, top hours, average R/Hour.</li>
+            <li><b>Sizeband Analysis</b> — berry size distribution across six size bands with Durafel scoring.</li>
+            <li><b>Durafel &amp; Weather Analysis</b> — firmness and weight correlated against live temperature and rainfall data.</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="project-card reveal">
+        <h3><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 21c0-3.5 2.7-6 6-6s6 2.5 6 6"/><circle cx="18" cy="9" r="2.3"/><path d="M15.5 21c.3-2.6 2-4.5 4.5-4.8"/></svg></span>HR Headcount Dashboard</h3>
+        <div class="project-preview"><iframe src="https://app.powerbi.com/view?r=eyJrIjoiZDNmMmJhOGQtYzY3Ny00OWFlLWI4NzYtMTc5ZTE3YWI4ZWMyIiwidCI6ImIxZWMzN2M3LWQwMWEtNDkwYS04YjJlLTgwY2EyZmU5YTMxYiJ9" loading="lazy" allowfullscreen title="HR Headcount Dashboard live"></iframe></div>
+        <p>Workforce headcount tracking and trend reporting for HR leadership.</p>
+        <div class="badges"><span>Power BI</span></div>
+      </div>
+
+      <div class="project-card reveal">
+        <h3><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>HR Talent Acquisition Dashboard</h3>
+        <div class="project-preview"><iframe src="https://app.powerbi.com/view?r=eyJrIjoiMGZiMjJlMTAtNzgxYi00YWU3LWIxOTctYjE2OWNhNjdlNzBlIiwidCI6ImIxZWMzN2M3LWQwMWEtNDkwYS04YjJlLTgwY2EyZmU5YTMxYiJ9" loading="lazy" allowfullscreen title="HR Talent Acquisition Dashboard live"></iframe></div>
+        <p>Recruitment pipeline and hiring performance visibility.</p>
+        <div class="badges"><span>Power BI</span></div>
+      </div>
+
+      <div class="project-card reveal">
+        <h3><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><path d="M4 4h16v12H8l-4 4z"/></svg></span>HR Service Request Dashboard</h3>
+        <div class="project-preview"><iframe src="https://app.powerbi.com/view?r=eyJrIjoiZjNhZGRkY2ItYzdmNS00ODU2LWEyYmQtMzhhZjY0Njg3MDJjIiwidCI6ImIxZWMzN2M3LWQwMWEtNDkwYS04YjJlLTgwY2EyZmU5YTMxYiJ9" loading="lazy" allowfullscreen title="HR Service Request Dashboard live"></iframe></div>
+        <p>Tracking and monitoring of internal HR service requests.</p>
+        <div class="badges"><span>Power BI</span></div>
+      </div>
+
+      <div class="project-card reveal">
+        <h3><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><path d="M6 2h9l3 3v17H6z"/><path d="M9 9h6M9 13h6M9 17h4"/></svg></span>Procurement Summary Dashboard</h3>
+        <div class="project-preview"><iframe src="https://app.powerbi.com/view?r=eyJrIjoiOTc0NWU1OTEtZGU4Mi00ZjZhLWI0ODctOTk4NjRlYTA1ODRjIiwidCI6ImIxZWMzN2M3LWQwMWEtNDkwYS04YjJlLTgwY2EyZmU5YTMxYiJ9" loading="lazy" allowfullscreen title="Procurement Summary Dashboard live"></iframe></div>
+        <p>Procurement spend and vendor performance summary reporting.</p>
+        <div class="badges"><span>Power BI</span></div>
+      </div>
+
+      <div class="project-card reveal">
+        <h3><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></span>Financial Analysis Dashboard</h3>
+        <div class="project-preview"><iframe src="https://app.powerbi.com/view?r=eyJrIjoiYjc1MjkwMzEtZjg4MC00MDc5LWFiYzAtNmE4MGQzZDI0NGUxIiwidCI6ImIxZWMzN2M3LWQwMWEtNDkwYS04YjJlLTgwY2EyZmU5YTMxYiJ9" loading="lazy" allowfullscreen title="Financial Analysis Dashboard live"></iframe></div>
+        <p>Consolidated financial performance analysis and reporting.</p>
+        <div class="badges"><span>Power BI</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="certs">
+  <div class="wrap">
+    <span class="eyebrow reveal">Credentials</span>
+    <h2 class="section-title reveal">Certifications</h2>
+    <div class="cert-grid">
+      <div class="cert-card reveal"><div class="cert-icon">◆</div><h4>Microsoft Fabric Analytics Engineer Associate</h4><span>2024</span></div>
+      <div class="cert-card reveal reveal-delay-1"><div class="cert-icon">◆</div><h4>Power BI Data Analyst Associate</h4><span>2022</span></div>
+      <div class="cert-card reveal reveal-delay-2"><div class="cert-icon">◆</div><h4>Microsoft Certified: Azure Data Fundamentals</h4><span>2023</span></div>
+      <div class="cert-card reveal reveal-delay-3"><div class="cert-icon">◆</div><h4>Informatica Cloud Data Integration Developer</h4><span>2023</span></div>
+      <div class="cert-card reveal"><div class="cert-icon">◆</div><h4>Azure Data Scientist Associate</h4><span>2023</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="wrap">
+    <span class="eyebrow reveal">More Work</span>
+    <h2 class="section-title reveal">Additional Dashboards</h2>
+    <div class="gallery-grid">
+      <div class="gallery-mock reveal"><img src="images/gallery-financial-reporting.png" alt="DIEZ Financial Reporting Dashboard screenshot"></div>
+      <div class="gallery-mock reveal reveal-delay-1"><img src="images/gallery-revenue-analysis.png" alt="Revenue Analysis Dashboard screenshot"></div>
+      <div class="gallery-mock reveal reveal-delay-2"><img src="images/gallery-revenue-breakdown.png" alt="Revenue Breakdown Dashboard screenshot"></div>
+    </div>
+    <p class="gallery-note">Screenshots only — based on production data, figures blurred for confidentiality.</p>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-box reveal">
+      <div>
+        <h3>Let's talk</h3>
+        <p>I'm open to new opportunities in Business Intelligence Development. Feel free to reach out — Mirdif, Dubai, UAE · +971-568629521</p>
+      </div>
+      <a href="mailto:yasmine.shaker88@gmail.com" class="btn btn-solid">yasmine.shaker88@gmail.com</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © <span id="year"></span> Yasmin Shaker · Business Intelligence Developer
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // scroll progress bar
+  const scrollbar = document.getElementById('scrollbar');
+  const updateScrollbar = () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    scrollbar.style.width = pct + '%';
+  };
+  window.addEventListener('scroll', updateScrollbar);
+  updateScrollbar();
+
+
+  // mobile nav
+  const toggle = document.getElementById('navtoggle');
+  const links = document.getElementById('navlinks');
+  toggle.addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05, rootMargin: '0px 0px -8% 0px' });
+  revealEls.forEach(el => io.observe(el));
+
+  // animated counters
+  const counters = document.querySelectorAll('.counter');
+  const cio = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.target, 10);
+        let current = 0;
+        const step = Math.max(1, Math.round(target / 40));
+        const tick = () => {
+          current += step;
+          if (current >= target) { el.textContent = target + '+'; return; }
+          el.textContent = current;
+          requestAnimationFrame(tick);
+        };
+        tick();
+        cio.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(el => cio.observe(el));
+</script>
+
+</body>
+</html>
