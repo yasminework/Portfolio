@@ -821,5 +821,296 @@
   counters.forEach(el => cio.observe(el));
 </script>
 
+<!-- ===== Smart chat launcher (free-plan friendly: opens the chatbot in a docked popup window) ===== -->
+<style>
+  /* --- Floating action button --- */
+  #chat-fab{
+    position:fixed; right:22px; bottom:22px; z-index:9001;
+    width:58px; height:58px; border-radius:50%; cursor:pointer;
+    border:1px solid var(--accent);
+    background:var(--accent); color:#101014;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 8px 26px rgba(129,140,248,.38);
+    transition:transform .28s cubic-bezier(.2,.7,.3,1), background .2s, opacity .28s;
+  }
+  #chat-fab:hover{transform:translateY(-3px) scale(1.04); background:var(--accent-dark); color:#fff;}
+  #chat-fab:focus-visible{outline:2px solid var(--accent2); outline-offset:3px;}
+  #chat-fab svg{width:26px;height:26px;}
+  #chat-fab.tucked{transform:translateY(90px); opacity:0; pointer-events:none;}
+
+  #chat-fab.pulse:before{
+    content:""; position:absolute; inset:-4px; border-radius:50%;
+    border:2px solid var(--accent); animation:chatPulse 2.4s ease-out infinite; pointer-events:none;
+  }
+  @keyframes chatPulse{
+    0%{transform:scale(.9); opacity:.7;}
+    70%{transform:scale(1.35); opacity:0;}
+    100%{opacity:0;}
+  }
+
+  #chat-badge{
+    position:absolute; top:-2px; right:-2px; width:14px; height:14px; border-radius:50%;
+    background:#f87171; border:2px solid var(--bg); display:none;
+  }
+  #chat-fab.unread #chat-badge{display:block;}
+
+  /* --- Always-visible label so visitors know what the button is --- */
+  #chat-label{
+    position:fixed; right:88px; bottom:36px; z-index:9000;
+    background:var(--card); color:var(--text);
+    border:1px solid var(--border); border-radius:20px;
+    padding:8px 15px; font-size:12.5px; font-weight:500; white-space:nowrap;
+    box-shadow:0 8px 24px rgba(0,0,0,.45);
+    pointer-events:none; user-select:none;
+    opacity:0; transform:translateX(10px);
+    transition:opacity .45s ease, transform .45s cubic-bezier(.2,.7,.3,1);
+  }
+  #chat-label.show{opacity:1; transform:translateX(0);}
+  /* little pointer to the button */
+  #chat-label:after{
+    content:""; position:absolute; right:-6px; top:50%; margin-top:-5px;
+    width:10px; height:10px; background:var(--card);
+    border-right:1px solid var(--border); border-top:1px solid var(--border);
+    transform:rotate(45deg);
+  }
+  #chat-label.hide{opacity:0; transform:translateX(10px); pointer-events:none;}
+
+  /* --- Proactive teaser bubble --- */
+  #chat-teaser{
+    position:fixed; right:92px; bottom:26px; z-index:9002;
+    width:290px; background:var(--card); color:var(--text);
+    border:1px solid var(--border); border-radius:14px 14px 4px 14px;
+    padding:14px 34px 14px 16px; font-size:13.5px; line-height:1.55;
+    box-shadow:0 14px 40px rgba(0,0,0,.5); cursor:pointer;
+    opacity:0; transform:translateY(10px) scale(.96); pointer-events:none;
+    transition:opacity .35s ease, transform .35s cubic-bezier(.2,.7,.3,1), border-color .2s;
+  }
+  #chat-teaser.show{opacity:1; transform:translateY(0) scale(1); pointer-events:auto;}
+  #chat-teaser:hover{border-color:var(--accent);}
+  #chat-teaser .teaser-top{display:flex; align-items:center; gap:9px; margin-bottom:7px;}
+  #chat-teaser .teaser-top img{width:28px;height:28px;border-radius:50%;object-fit:cover;border:1px solid var(--border);}
+  #chat-teaser b{color:#fff; font-family:'Plus Jakarta Sans',sans-serif; font-size:13px; display:block;}
+  #chat-teaser .teaser-sub{font-size:11px;color:var(--text-dim);display:flex;align-items:center;gap:5px;}
+  #chat-teaser .dot-online{width:6px;height:6px;border-radius:50%;background:#4ade80;display:inline-block;}
+  #chat-teaser .teaser-body{color:var(--text-dim); min-height:20px;}
+  #chat-teaser-x{
+    position:absolute; top:6px; right:8px; background:none; border:none; cursor:pointer;
+    color:var(--text-dim); font-size:16px; line-height:1; padding:4px;
+  }
+  #chat-teaser-x:hover{color:var(--accent);}
+  .teaser-cta{display:inline-block; margin-top:10px; font-size:12px; font-weight:600; color:var(--accent);}
+  .teaser-dots{display:inline-flex; gap:4px; align-items:center; height:20px;}
+  .teaser-dots i{width:5px;height:5px;border-radius:50%;background:var(--text-dim);animation:tdot 1.2s infinite;}
+  .teaser-dots i:nth-child(2){animation-delay:.18s;}
+  .teaser-dots i:nth-child(3){animation-delay:.36s;}
+  @keyframes tdot{0%,60%,100%{opacity:.25;transform:translateY(0);}30%{opacity:1;transform:translateY(-3px);}}
+
+  /* --- Toast if the popup gets blocked --- */
+  #chat-toast{
+    position:fixed; right:22px; bottom:92px; z-index:9003;
+    width:290px; max-width:calc(100vw - 44px);
+    background:var(--card); border:1px solid var(--accent); border-radius:12px;
+    padding:16px; font-size:13px; color:var(--text-dim); box-shadow:0 16px 44px rgba(0,0,0,.55);
+    opacity:0; transform:translateY(10px); pointer-events:none; transition:.3s;
+  }
+  #chat-toast.show{opacity:1; transform:translateY(0); pointer-events:auto;}
+  #chat-toast a{font-weight:600;}
+
+  @media (max-width:640px){
+    #chat-label{
+      right:14px; bottom:82px; font-size:12px; padding:7px 13px;
+    }
+    #chat-label:after{
+      right:16px; top:auto; bottom:-6px; margin-top:0;
+      border:none; border-right:1px solid var(--border); border-bottom:1px solid var(--border);
+    }
+    #chat-fab{right:14px; bottom:14px;}
+    #chat-teaser{right:14px; left:14px; width:auto; bottom:84px; border-radius:14px;}
+    #chat-toast{right:14px; left:14px; width:auto;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    #chat-fab, #chat-teaser, #chat-toast, #chat-label{transition:none;}
+    #chat-fab.pulse:before, .teaser-dots i{animation:none;}
+  }
+</style>
+
+<div id="chat-label" aria-hidden="true">Ask more questions about Yasmin</div>
+
+<div id="chat-teaser" role="status">
+  <button id="chat-teaser-x" aria-label="Dismiss">&times;</button>
+  <div class="teaser-top">
+    <img src="https://res.cloudinary.com/dbakezv9c/image/upload/v1784615700/portfolio/photos/hjoszvmbjmhgdziybymq.jpg" alt="">
+    <div>
+      <b>Yasmin's AI assistant</b>
+      <span class="teaser-sub"><span class="dot-online"></span>Online now</span>
+    </div>
+  </div>
+  <div class="teaser-body"><span class="teaser-dots"><i></i><i></i><i></i></span></div>
+  <span class="teaser-cta">Start chatting →</span>
+</div>
+
+<button id="chat-fab" aria-label="Ask more questions about Yasmin" title="Ask more questions about Yasmin">
+  <span id="chat-badge"></span>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+</button>
+
+<div id="chat-toast">
+  Your browser blocked the chat window.<br>
+  <a href="https://my-chatbot-e9eb3b.zapier.app" target="_blank" rel="noopener">Open the chat here ↗</a>
+</div>
+
+<script>
+(function(){
+  const CHAT_URL = 'https://my-chatbot-e9eb3b.zapier.app';
+
+  const fab        = document.getElementById('chat-fab');
+  const label      = document.getElementById('chat-label');
+  const teaser     = document.getElementById('chat-teaser');
+  const teaserX    = document.getElementById('chat-teaser-x');
+  const teaserBody = teaser.querySelector('.teaser-body');
+  const toast      = document.getElementById('chat-toast');
+
+  // ---- lightweight memory (safe if storage is blocked) ----
+  const mem = {
+    get(k){ try{ return localStorage.getItem('yschat_'+k); }catch(e){ return null; } },
+    set(k,v){ try{ localStorage.setItem('yschat_'+k, v); }catch(e){} }
+  };
+  const dismissedAt = parseInt(mem.get('dismissed')||'0', 10);
+  const recentlyDismissed = Date.now() - dismissedAt < 7*24*60*60*1000; // 7 days
+  const hasOpenedBefore = mem.get('opened') === '1';
+  const returning = mem.get('seen') === '1';
+  mem.set('seen','1');
+
+  let teaserShown = false, nudged = false, chatWin = null, hideTimer = null;
+
+  // show the label shortly after load so it doesn't fight the hero animation
+  setTimeout(() => label.classList.add('show'), 2200);
+
+  // ---- context-aware teaser copy ----
+  function currentSection(){
+    let cur = 'home';
+    document.querySelectorAll('section[id]').forEach(s => {
+      if (s.getBoundingClientRect().top <= window.innerHeight*0.45) cur = s.id;
+    });
+    return cur;
+  }
+  function teaserCopy(){
+    switch(currentSection()){
+      case 'projects':
+      case 'gallery':    return 'Curious how any of these dashboards were built? Ask me.';
+      case 'experience':
+      case 'skills':     return 'Want the detail behind a role or a tool? I can walk you through it.';
+      case 'certs':      return 'Happy to explain what any of these certifications covers.';
+      case 'contact':    return 'Before you go — any questions about Yasmin’s work?';
+      default:           return returning ? 'Welcome back. Anything you’d like to dig into?'
+                                          : 'Ask me anything about Yasmin’s BI experience or projects.';
+    }
+  }
+
+  function showTeaser(){
+    if (teaserShown || recentlyDismissed || hasOpenedBefore) return;
+    teaserShown = true;
+    label.classList.add('hide');           // the bubble replaces the label
+    teaser.classList.add('show');
+    fab.classList.add('unread','pulse');
+    setTimeout(() => { teaserBody.textContent = teaserCopy(); }, 1100);
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(hideTeaser, 15000);
+  }
+  function hideTeaser(){
+    teaser.classList.remove('show');
+    label.classList.remove('hide');        // bring the label back
+  }
+
+  teaserX.addEventListener('click', e => {
+    e.stopPropagation();
+    teaser.classList.remove('show');
+    label.classList.remove('hide');
+    fab.classList.remove('unread','pulse');
+    mem.set('dismissed', String(Date.now()));
+  });
+  teaser.addEventListener('click', openChat);
+
+  // ---- open the chatbot in a docked popup window ----
+  // (Zapier blocks iframe embedding on the free plan, so a real window is used instead)
+  function openChat(){
+    teaser.classList.remove('show');
+    label.classList.remove('hide');
+    fab.classList.remove('unread','pulse');
+    mem.set('opened','1');
+
+    if (chatWin && !chatWin.closed){ chatWin.focus(); return; }
+
+    const w = 420;
+    const h = Math.min(700, Math.max(520, window.screen.availHeight - 160));
+    const left = window.screenX + window.outerWidth - w - 30;
+    const top  = window.screenY + window.outerHeight - h - 60;
+
+    chatWin = (window.innerWidth <= 720)
+      ? window.open(CHAT_URL, '_blank')
+      : window.open(CHAT_URL, 'yasminChat',
+          'width='+w+',height='+h+',left='+Math.max(0,left)+',top='+Math.max(0,top)+
+          ',resizable=yes,scrollbars=yes');
+
+    if (!chatWin){                       // popup blocker caught it
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 8000);
+    } else {
+      try { chatWin.focus(); } catch(e){}
+    }
+  }
+  fab.addEventListener('click', openChat);
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') hideTeaser(); });
+
+  // ---- trigger 1: idle on the page ----
+  setTimeout(showTeaser, returning ? 6000 : 12000);
+
+  // ---- trigger 2: visitor reaches Projects (high intent) ----
+  const projects = document.getElementById('projects');
+  if (projects && 'IntersectionObserver' in window){
+    const pio = new IntersectionObserver(en => {
+      en.forEach(x => { if (x.isIntersecting){ showTeaser(); pio.disconnect(); } });
+    }, { threshold: 0.25 });
+    pio.observe(projects);
+  }
+
+  // ---- trigger 3: visitor reaches Contact — nudge once more ----
+  const contact = document.getElementById('contact');
+  if (contact && 'IntersectionObserver' in window){
+    const cio2 = new IntersectionObserver(en => {
+      en.forEach(x => {
+        if (x.isIntersecting && !nudged && !hasOpenedBefore && !recentlyDismissed){
+          nudged = true; teaserShown = false; showTeaser();
+        }
+      });
+    }, { threshold: 0.4 });
+    cio2.observe(contact);
+  }
+
+  // ---- trigger 4: exit intent (desktop) ----
+  document.addEventListener('mouseout', e => {
+    if (!e.relatedTarget && e.clientY <= 0 && !hasOpenedBefore && !recentlyDismissed){
+      teaserShown = false; showTeaser();
+    }
+  });
+
+  // ---- tuck the button + label away while scrolling on phones ----
+  let scrollTimer, lastY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    if (window.innerWidth > 520) return;
+    const y = window.scrollY;
+    if (y > lastY + 8){ fab.classList.add('tucked'); label.classList.add('hide'); }
+    lastY = y;
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => {
+      fab.classList.remove('tucked');
+      if (!teaser.classList.contains('show')) label.classList.remove('hide');
+    }, 550);
+  }, { passive:true });
+})();
+</script>
+
+
 </body>
 </html>
