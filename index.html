@@ -347,11 +347,37 @@
   .chatbot-card p{color:var(--text-dim);font-size:14.5px;margin:16px 0 8px;}
   .chatbot-card em{color:var(--accent2);font-style:normal;font-weight:600;}
   .chatbot-demo{
-    width:100%;border-radius:10px;overflow:hidden;
+    position:relative;width:100%;border-radius:10px;overflow:hidden;
     border:1px solid var(--border);background:#0f0f10;margin-bottom:6px;transition:.3s;
   }
   .chatbot-card:hover .chatbot-demo{border-color:var(--accent);}
-  .chatbot-demo img{width:100%;height:auto;display:block;}
+  .chatbot-demo img{width:100%;height:auto;display:block;cursor:zoom-in;transition:.3s;}
+  .chatbot-demo:hover img{filter:brightness(1.03);}
+  .zoom-hint{
+    position:absolute;bottom:12px;right:12px;pointer-events:none;
+    background:rgba(13,13,13,.82);color:var(--text);border:1px solid var(--border);
+    padding:5px 11px;border-radius:20px;font-size:12px;font-weight:500;
+    opacity:0;transform:translateY(4px);transition:opacity .25s,transform .25s;
+  }
+  .chatbot-demo:hover .zoom-hint{opacity:1;transform:translateY(0);}
+  /* lightbox */
+  #lightbox{
+    position:fixed;inset:0;z-index:9500;display:none;
+    align-items:center;justify-content:center;
+    background:rgba(6,6,8,.92);backdrop-filter:blur(4px);
+    padding:24px;cursor:zoom-out;
+  }
+  #lightbox.open{display:flex;animation:lbIn .25s ease;}
+  @keyframes lbIn{from{opacity:0;}to{opacity:1;}}
+  #lightbox img{
+    max-width:95vw;max-height:92vh;width:auto;height:auto;
+    border-radius:10px;border:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,.6);
+  }
+  #lightbox-close{
+    position:absolute;top:18px;right:24px;background:none;border:none;cursor:pointer;
+    color:#fff;font-size:34px;line-height:1;opacity:.8;
+  }
+  #lightbox-close:hover{opacity:1;color:var(--accent);}
   .chatbot-points{list-style:none;margin:0 0 14px;padding:0;}
   .chatbot-points li{
     color:var(--text-dim);font-size:14px;padding-left:22px;position:relative;margin-bottom:9px;
@@ -664,7 +690,8 @@
       <div class="project-card chatbot-card reveal" id="chatbot">
         <div class="project-head"><h3><span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#818cf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>Dubai Real Estate AI Assistant</h3></div>
         <div class="chatbot-demo">
-          <img src="images/dubai-re-chatbot-demo.gif" alt="Dubai Real Estate AI Assistant answering questions in natural language and returning Power BI charts inside Microsoft Teams" loading="lazy">
+          <img class="zoomable" src="images/dubai-re-chatbot-demo.gif" alt="Dubai Real Estate AI Assistant answering questions in natural language and returning Power BI charts inside Microsoft Teams" loading="lazy">
+          <span class="zoom-hint">⤢ Click to enlarge</span>
         </div>
         <p>A conversational AI assistant that works <em>alongside</em> the dashboard above. When users need details the report doesn't show — or just want a quick answer without opening Power BI — they ask in plain English or Arabic and get a written answer plus the matching chart, right inside Microsoft Teams.</p>
         <ul class="chatbot-points">
@@ -672,6 +699,7 @@
           <li>Understands free-text business questions and resolves them to the right measures and dimensions.</li>
           <li>Generates and runs DAX against the Power BI semantic model, then returns results as narrative + visuals.</li>
           <li>Delivered inside Microsoft Teams, so an answer is one message away.</li>
+          <li><b>Cost-efficient by design</b> — consumption-based pricing means pennies per question and no per-seat licensing, a fraction of the cost of native Power BI Copilot, which requires premium Fabric capacity.</li>
         </ul>
         <div class="badges"><span>Power BI</span><span>Semantic Model</span><span>DAX</span><span>Natural Language</span><span>Microsoft Teams</span><span>AI Assistant</span></div>
       </div>
@@ -1146,6 +1174,34 @@
 })();
 </script>
 
+
+<!-- ===== Image lightbox (click-to-enlarge for the chatbot demo) ===== -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged image">
+  <button id="lightbox-close" aria-label="Close">&times;</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+<script>
+(function(){
+  const lb    = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightbox-img');
+  const open = src => {
+    lbImg.src = src;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+  const close = () => {
+    lb.classList.remove('open');
+    lbImg.src = '';
+    document.body.style.overflow = '';
+  };
+  document.querySelectorAll('.zoomable').forEach(img => {
+    img.addEventListener('click', () => open(img.currentSrc || img.src));
+  });
+  lb.addEventListener('click', close);           // click backdrop or image closes
+  document.getElementById('lightbox-close').addEventListener('click', close);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+})();
+</script>
 
 </body>
 </html>
